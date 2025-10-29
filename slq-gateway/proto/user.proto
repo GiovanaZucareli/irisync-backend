@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "github.com/GiovanaZucareli/irisync-backend/sql-gateway/proto";
+
+// Serviço de gerenciamento de usuários
+service UserService {
+  // Criar novo usuário
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+  
+  // Buscar usuário por email
+  rpc GetUserByEmail(GetUserByEmailRequest) returns (GetUserByEmailResponse);
+  
+  // Buscar usuário por ID
+  rpc GetUserById(GetUserByIdRequest) returns (GetUserByIdResponse);
+}
+
+// ============= CREATE USER =============
+message CreateUserRequest {
+  string email = 1;
+  string password_hash = 2;
+  string name = 3;
+}
+
+message CreateUserResponse {
+  int64 id = 1;
+  string email = 2;
+  string name = 3;
+  string created_at = 4;
+  string error = 5;
+}
+
+// ============= GET USER BY EMAIL =============
+message GetUserByEmailRequest {
+  string email = 1;
+}
+
+message GetUserByEmailResponse {
+  User user = 1;
+  string error = 2;
+}
+
+// ============= GET USER BY ID =============
+message GetUserByIdRequest {
+  int64 id = 1;
+}
+
+message GetUserByIdResponse {
+  User user = 1;
+  string error = 2;
+}
+
+// ============= USER MODEL =============
+message User {
+  int64 id = 1;
+  string email = 2;
+  string password_hash = 3;
+  string name = 4;
+  string created_at = 5;
+  string updated_at = 6;
+}
